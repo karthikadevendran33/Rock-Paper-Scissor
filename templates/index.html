@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Gesture Battle Arena - 2 Player</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;900&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="cyber-container">
+        <header class="app-header">
+            <div class="logo">G-RECOGNITION <span class="highlight">AI</span></div>
+            <div class="status-indicator"><span class="pulse-dot"></span> SYSTEM READY</div>
+        </header>
+
+        <main id="setup-screen" class="glass-card">
+            <h1 class="glow-title">HAND GESTURE BATTLE</h1>
+            <p class="subtitle">PLAYER 1 VS PLAYER 2 (2-HUMAN MODE)</p>
+
+            <div class="config-panel">
+                <label for="match-length">SELECT MAX ROUNDS</label>
+                <div class="select-wrapper">
+                    <select id="match-length">
+                        <option value="1">1 ROUND - QUICK MATCH</option>
+                        <option value="3">3 ROUNDS - SHORT BATTLE</option>
+                        <option value="5" selected>5 ROUNDS - CHAMPIONSHIP</option>
+                    </select>
+                </div>
+                <button id="start-btn" class="cyber-btn">INITIALIZE ARENA ⚡</button>
+            </div>
+        </main>
+
+        <main id="arena-screen" class="hidden">
+            <div class="hud-scoreboard glass-card">
+                <div class="hud-player ai-side">
+                    <span class="hud-label">PLAYER 1</span>
+                    <span class="hud-score" id="p1-score">0</span>
+                </div>
+                <div class="hud-center">
+                    <span id="round-indicator" class="round-badge">ROUND 1/5</span>
+                    <span class="vs-badge">VS</span>
+                </div>
+                <div class="hud-player human-side">
+                    <span class="hud-label">PLAYER 2</span>
+                    <span class="hud-score" id="p2-score">0</span>
+                </div>
+            </div>
+
+            <div class="battle-grid">
+                <!-- PLAYER 1 CARD (LEFT) -->
+                <div class="glass-card player-card flex-card">
+                    <div class="card-badge">PLAYER 1</div>
+                    <div class="viewfinder">
+                        <video id="webcam-p1" autoplay playsinline muted></video>
+                        <img id="p1-preview" class="hidden preview-img" alt="Player 1 Preview" />
+                        <div id="p1-move-overlay" class="overlay-badge hidden">👤</div>
+                    </div>
+                    <div id="p1-status" class="status-text">READY TO SCAN</div>
+                    <button id="p1-scan-btn" class="cyber-btn scan-btn" onclick="scanP1()">SCAN PLAYER 1 📷</button>
+                </div>
+
+                <!-- PLAYER 2 CARD (RIGHT) -->
+                <div class="glass-card player-card flex-card">
+                    <div class="card-badge">PLAYER 2</div>
+                    <div class="viewfinder">
+                        <video id="webcam-p2" autoplay playsinline muted></video>
+                        <img id="p2-preview" class="hidden preview-img" alt="Player 2 Preview" />
+                        <div id="p2-move-overlay" class="overlay-badge hidden">👤</div>
+                    </div>
+                    <div id="p2-status" class="status-text">WAITING FOR P1</div>
+                    <button id="p2-scan-btn" class="cyber-btn scan-btn btn-disabled" onclick="scanP2()" disabled>SCAN PLAYER 2 📷</button>
+                </div>
+            </div>
+
+            <!-- RESULT BANNER -->
+            <div class="glass-card result-card">
+                <h2 id="round-result-banner">GET READY FOR ROUND 1!</h2>
+            </div>
+
+            <div class="glass-card log-card">
+                <div class="log-header">COMBAT LOG DATA</div>
+                <table id="match-log-table">
+                    <thead>
+                        <tr>
+                            <th>RD</th>
+                            <th>PLAYER 1</th>
+                            <th>PLAYER 2</th>
+                            <th>ROUND WINNER</th>
+                        </tr>
+                    </thead>
+                    <tbody id="log-body"></tbody>
+                </table>
+                <button id="exit-btn" class="cyber-btn secondary-btn">ABORT MATCH ✖</button>
+            </div>
+        </main>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
